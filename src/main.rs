@@ -3,8 +3,12 @@ use std::io;
 use std::cmp::Ordering;
 use rand::Rng;
 
+fn error_message(&guess: &u32, &answer: &u32) {
+    println!("You guessed: {}, and the correct answer is {}.  Please play again!",  guess, answer)
+}
+
 fn main() {
-    let mut guess: String = String::new();
+    let mut guess = String::new();
     let secret_number: u32 = rand::thread_rng().gen_range(1, 101);
 
     println!("Guess a number between 1 and 100!  Press C to Cheat and see the answer :)");
@@ -20,22 +24,20 @@ fn main() {
             .read_line(&mut guess)
             .expect("Failed to read line");
         
-        return guess
+        guess
             .trim()
             .parse::<u32>()
-            .expect("You did not enter a number");
+            .expect("You did not enter a number")
     } else {
-        let guess = guess
+        guess
             .trim()
-            .parse()
-            .expect("You did not enter a Number or C");
+            .parse::<u32>()
+            .expect("You did not enter a Number or C")
     };
-    
-    println!("You guessed {:?}", guess);
 
     match guess.cmp(&secret_number) {
-        Ordering::Less => println!("{} is low", guess),
-        Ordering::Greater => println!("{} is high", guess),
+        Ordering::Less => error_message(&guess, &secret_number),
+        Ordering::Greater => error_message(&guess, &secret_number),
         Ordering::Equal => println!("{} is correct!", guess),
     }
 }
