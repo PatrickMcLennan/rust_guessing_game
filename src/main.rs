@@ -1,4 +1,3 @@
-// Associated Type === fancy words for Static Method
 use std::io;
 use std::cmp::Ordering;
 use rand::Rng;
@@ -18,13 +17,14 @@ fn main() {
         .expect("Failed to read line");
     
     let guess = if guess.trim().to_ascii_lowercase() == "c" {
+        let mut new_guess: String = String::new();
         println!("The secret number is {}, try now", secret_number);
 
         io::stdin()
-            .read_line(&mut guess)
+            .read_line(&mut new_guess)
             .expect("Failed to read line");
         
-        guess
+        new_guess
             .trim()
             .parse::<u32>()
             .expect("You did not enter a number")
